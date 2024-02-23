@@ -43,8 +43,8 @@ spec:
                 description: ManagedResourceSpecNamespaceSelector defines the selector
                   used to specify which namespaces are affected
                 properties:
-                  regex:
-                    description: Regex that the namespace name must match to be selected
+                  annotation:
+                    description: Annotation key namespace selector
                     type: string
                 type: object
               template:

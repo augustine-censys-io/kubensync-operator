@@ -27,3 +27,6 @@ Dockerfile.cross
 
 # mkdocs site
 site/
+
+# vscode dir
+.vscode/

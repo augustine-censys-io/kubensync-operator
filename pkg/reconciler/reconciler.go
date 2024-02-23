@@ -3,7 +3,6 @@ package reconciler
 import (
 	"bytes"
 	"context"
-	"regexp"
 	"strings"
 	"sync"
 	"text/template"
@@ -38,13 +37,13 @@ func (r *Reconciler) ReconcileNamespaceChange(ctx context.Context, mrDef *automa
 	newMRDef := mrDef.DeepCopy()
 	r.ownerRefs = mrOwnerRefs(mrDef)
 
-	regex, err := regexp.Compile(mrDef.Spec.NamespaceSelector.Regex)
-	if err != nil {
-		return nil, err
-	}
-	if !regex.MatchString(namespace.Name) {
+	annotation := mrDef.Spec.NamespaceSelector.Annotation
+	val, exist := namespace.Annotations[annotation]
+
+	if !exist || val != "true" {
 		return newMRDef, nil
 	}
+
 	reconcilerLogger.Info("Reconciling", "Namespace", namespace.Name, "ManagedResource", mrDef.Name)
 	manifests, err := renderTemplateForNamespace(mrDef.Spec.Template, namespace, r.RestConfig)
 	if err != nil {

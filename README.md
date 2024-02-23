@@ -13,6 +13,14 @@ KubeNSync is a powerful Kubernetes operator designed to make your life easier. I
 
 ## Getting Started
 
+### Build the operator
+```
+make manifests
+make build
+IMAGE_TAG_BASE=<registry>/<repo> VERSION=0.2.0 make docker-build
+IMAGE_TAG_BASE=<registry>/<repo> VERSION=0.2.0 make docker-push
+```
+
 ### Install the operator
 
 ``` bash
